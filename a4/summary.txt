@@ -1,0 +1,92 @@
+******************************************************************************************************
+                    NETWORK INFORMATION                                                            
+******************************************************************************************************
+
+Number of Users collected :386
+The Original Graph has 391 nodes and 2347 edges 
+
+The Subgraph (MinFreq >= 3) has 343 nodes and 2274 edges 
+
+The number of communities discovered  : 4 
+Average number of users per community : 85
+
+******************************************************************************************************
+                    CLUSTERS INFORMATION                                                            
+*******************************************************************************************************
+
+Number of clusters 		 Corresponding Number of Nodes/Followers
+****************** 		  ***********************************
+0 							 169 
+1 							 135 
+2 							 36 
+3 							 3 
+
+**************************Analyzing the tweets collected from collect file**************************
+
+The Number of Tweets collected : 232
+
+******************************************************************************************************
+               SENTIMENT ANALYSIS VIA TEXTBLOB FOR TWEETS COLLECTED                               
+*****************************************************************************************************
+
+Number of Positive instances found: 94
+Number of Negative instances found : 19
+Number of Neutral instances found : 119
+
+Percentage of Positive tweets: 40.51724137931034 %
+Percentage of Negative tweets: 8.189655172413794 %
+Percentage of Neutral tweets: 51.293103448275865 %
+
+Example of a Positive class : rt justice league s opening scene was originally comedic says holt movies comedic justice le
+Example of a Negative class : dc justice league collectible statues review ad
+Example of a Neutral class : rt i support releasethesnydercut aquaman is all in we are approaching 150k petition to have warner bros release the di
+
+******************************************************************************************************
+               SENTIMENT ANALYSIS VIA AFINN DATASET FOR TWEETS COLLECTED                          
+*****************************************************************************************************
+
+Number of Positive instances found: 158
+Number of Negative instances found : 18
+Number of Neutral instances found : 56
+
+Percentage of Positive tweets: 68.10344827586206 %
+Percentage of Negative tweets: 7.758620689655173 %
+Percentage of Neutral tweets: 24.137931034482758 %
+
+Example of a Positive class : rt just came from justice league one of the best movies i ve watched in 2017 justiceleague
+Example of a Negative class : justice league bad
+Example of a Neutral class : new post dc comics has been published on hornet stories
+
+******************************************************************************************************
+            CLASSIFIER BUILT ON AFINN DATA AND ITS LABELS USING LOGISTIC REGRESSION MODEL          
+*****************************************************************************************************
+The tweets are split into train(70%) and testing(30%) data and the scores are caluclated as below.
+
+
+Positive tweets are high. Hence, for building classifier, the tweets in the training set are slightly oversampled to match the number of positive occurences.
+The score for trained data: 0.923547 
+The score for tested data: 0.814286 
+
+****************** Trained data calculations below **********************************
+
+Total row count in trained data: 327
+
+Number of Positive Instances: 112 
+Number of Negative Instances: 111 
+Number of Neutral Instances: 104 
+
+Example of a Positive tweet: also i really can t choose a favorite moment from justice league i actually adored it 
+Example of a Negative tweet: justice league bad 
+Example of a Neutral Tweet: rt justiceleague was reportedly going to feature an appearance from the villainous desaad at one point 
+
+****************** Testing data calculations below **********************************
+
+Total row count in testing data: 70
+
+Number of Positive Instances: 46 
+Number of Negative Instances: 22 
+Number of Neutral Instances: 2 
+
+Example of a Positive tweet: if there s a directors cut please more wonderbat and less clois superman he s the most boring character in the justice league wonderbat 
+Example of a Negative tweet: holy crap batman its monday again only one thing can cure those start of week blues some podcas 
+Example of a Neutral Tweet: at one with the ocean climatechange mondaymorning iartg amwriting gamedev indiedev 

@@ -1,0 +1,12 @@
+The complete code level details and its phases, results are in depth explained in -------------> Description.txt file in this folder.
+
+A gist of analysis:
+==================
+1. As a part of this assignment, I have collected raw twitter data, tweets and clustered people into groups.
+2. I also found the number of communities formed.
+3. I was able to prune the graph to remove the outliers (nodes with MinDegree).
+4. I was able to analyze TextBlob, Afinn dict for sentiment classification (Sentiment analysis of a given tweet).
+5. Furthermore, I had data which was labelled through AFINN dict, hence I made use of the data for building the prediction model, and then splitting them into 70% of Training data and 30% testing data.
+6. Vectorized the training and testing data, fitted the Logistic regression on this training data.
+7. Predicted the Sentiment analysis for the testing data.
+8. Find the accuracies.

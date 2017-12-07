@@ -1,0 +1,109 @@
+Assignment a4:
+===============
+
+This assignment involves 4 different modules.
+
+1. Collect.py:
+==============
+    This python file will collect the raw data from twitter and creates output pickle files for further processing. As a part of our assignment, this file does the following:
+
+        a.) Establish twitter connection through tokens, and create a tweepy API for api calls.
+        b.) Reads the input file with movie names. This assignment focusses on getting tweets and response object based on a single popular movie name - JusticeLeague.
+        c.) Search api query is made on the movie name and response object is gathered.
+        e.) Collect the tweets from the response object and store in -----------> Tweets.pkl file for processing in Classify.py file.
+        f.) For selected 5 users_ids, we will then make API.FOLLOWERS/IDS calls to get the list of their followers. Count = 250. The output is stored in a followers_screen_dict - which will have screen_id and its list of followers.
+        g.) Once the followers list are got, we will then make another API.FOLLOWERS/IDS calls for all the followers in the followers list. Count = 300. The output is stored in a followers_followers_dict - which will have follower and its list of followers.
+        h.) Followers_of_followers dict file is dumped into pickle file for further processing.
+
+From the above operations, it is clear that this file collects 5 user_ids, 250 followers of them and 300 followers of each 250 followers.
+
+2. Cluster.py
+==============
+NOTE:
+====
+    ************* The graph drawn as a part of clusters, is finding people who know each other in the network. An Undirected edge between people. If a person A follows person B and only if the person B follows person A, an edge will be formed.***********
+
+    Since huge data is involved in collect.py and runs for approx 15 hrs, and if the programmer does not wish to re-run the
+collect.py, then this Cluster program will take the files that was run as a part of my initial test of collecting data.
+    As a part of Collect.py testing, I have collected 5 screen_ids, 250 followers of them and 300 followers of each 250
+followers and ran for almost 10-12 hrs.
+
+    If the programmer running this file wishes to run collect.py first, then collect program will create files accordingly
+for this program to pick up.
+
+    Note:
+        No action required from the programmer. This program will take the files according to the programmer and process.
+
+    READ():
+    =======
+    Read the pickle file collected from collect.py file.
+    If
+        collect.py is run, then it will create the below files necessary to run in cluster.py.
+                    followers_followers_dict, ids.pkl  - With 5 screen_ids, 250 followers and 300 followers_followers.
+    else:
+        If programmer is not running collect.py file, then this program would take the existing files that were created
+        when I ran the collect.py file (which approx took 10hrs)
+                    followers_followers_dict_input, ids_input.pkl  - With 5 screen_ids, 250 followers and 300 followers_followers.
+
+    Processing:
+    ===========
+
+    This python file will cluster the collected raw data and create clusters based on Girvan Newman algorithm (Edge betweenness centrality).
+
+    a.) An edge is formed if the values from the followers_followers_dict is present in the set of ids and union of set its followers as shown below.
+        Eg: Screen Id - A, E
+            Followers of A - B
+            Followers of Followers:
+                                B - A, D
+
+            Followers of E - D, F
+            Followers of Followers:
+                                D - B, E
+                                F - A, E
+
+            An edges will be formed for undirected as below for the above screen ids and its followers.
+
+            a.) A and B - Because A follows B and B follows A back
+            b.) E and F - Because E follows F and F follows E back
+            c.) E and D - Because E follows D and D follows E back
+            d.) Finally A and F are connected as A is a follower of F and B.(Since A and B edge is already drawn, a new edge will be drawn between A and F).
+            e.) D and B are connected because B is a follower of both A and D. (Since E and D are already drawn, a new edge will be formed between B and D).
+
+    b.) Once the graph is drawn, network is drawn accordingly to plot the figure and saved to the output file -------> "network_original.png" file.
+    c.) From this original graph, I have removed edges whose minDegree >= 3(outliers), to capture the pruned network and stored in ----------> "network_pruned.png" file.
+    d.) Community detection is predicted on the subgraph (Pruned graph) via Girvan Newman algorithm (Edge betweenness centrality) calculation.
+    e.) Clusters formation are printed out and written to the output file ------------>  "Clusters_results.txt"
+
+3. Classify.py
+==============
+
+    This file reads the collected tweets, cleans the text by removing any https reference, punctuations, stop_words, languages other than english and sends the clean text for sentiment analysis.
+
+    a.) The collected tweets are read, and the text are pre-processed by using regex functions to eliminate https reference, punctuations etc.
+    b.) The cleaned text is then analyzed via TextBlob and Afinn dataset.
+    c.) The textBlob is a library where we send the complete single cleaned text to the function, and it gives us the polarity of the sentence. If the polarity is > 1, then it is considered to be a positive sentiment text.
+        If the polarity is < 1, then the tweet is negative, If the polarity is == 0, then it is a neutral tweet.
+    d.) The percentage of pos, neg, neutral tweets are calculated and results are written to ------------> "Classify_results.txt" file
+    e.) Another method of sentiment classification is via, AFINN dict. Here, the tweet is tokenized and each word is analyzed against the AFINN dict. If the word is present in the AFINN list of words, based on its label, we find out if the whole tweet is positive or negative or neutral.
+    f.) The percentage of the above process is also calculated and the results are written to the same output file --------------> "Classify_results.txt" file.
+    g.) Now, having baselined, the afinn results with data and its corresponding labels, I have built a classifier model using Logistic regression.
+    h.) Creating a dataframe to store the positive, negative and sentiment polarity along with tweets.
+    i.) The data is then split into training and testing. The split ratio of training and testing is 70% and 30% respectively.
+    j.) Unskew the data according to the length of positive tweets retrieved from afinn_data above. Such that training data will have more or less equal number of positive, negative, neutral length.
+    k.) Training data is then vectorized to get the vectors and its corresponding vocab. Initially the vocab will be none.
+    l.) Testing data is then vectorized to get the vectors and the vocab obtained from the above step is obtained to calculate.
+    m.) Use Logistic regression model and fit the training data.
+    n.) Predict the Sentiment analysis(Positive, Negative or neutral) for testing data by passing the tweets.
+    o.) Record the results in =--------------------> Classify_results.txt
+
+4. Summarize.py
+================
+
+    This file reads all the output files created by the above methods and writes to another text file -------> Summary.txt file.
+
+    Outputs created in total by above Cluster and Classify methods are:
+
+        a.) Cluster_results.txt
+        b.) Classify_results.txt
+
+    Above files are written to ------------> "Summary.txt"

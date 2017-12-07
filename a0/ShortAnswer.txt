@@ -1,0 +1,73 @@
+Enter your responses inline below and push this file to your private GitHub
+repository.
+
+
+1. Assume I plan to use the friend_overlap function above to quantify the
+similarity of two users. E.g., because 344 is larger than 1, I conclude that
+Jill Stein and Gary Johnson are more similar than Hillary Clinton and Donald
+Trump.
+
+How is this approach misleading? How might you fix it?
+
+Solution:
+=============
+This approach is misleading because the number of common friends does not indicate the similarity of each user pairs. Total number of friends each pairs of users have is not considered in the above approach. The similarity should be calculated by the percentage of common friends and not the count or the number of common friends of each user pairs. If for example there are 2 users, their percentage of common friends can be calculated by the below method;
+
+P(Common friends - Intersection of user1 and user2) / {P(User's 1 friends) + P(user's 2 friends) - P(Common friends)}. This is how the overlap percentage should be calculated.
+
+
+
+2. Looking at the output of your followed_by_hillary_and_donald function, why
+do you think this user is followed by both Hilary Clinton and Donald Trump,
+who are rivals? Do some web searches to see if you can find out more
+information.
+
+
+
+Solution:
+===========
+The user who is followed by both Hilary and Trump is ----> "Whitehouse". Eventhough they are rivals their common interest is to get into the Whitehouse as President of USA. So it makes sense and essential for them to follow the user "Whitehouse" for any feeds from this user to keep them updated all time. It could be for upcoming election or anything relating to a bill passed by the current president etc.
+
+
+
+
+3. There is a big difference in how many accounts each candidate follows (Gary
+Johnson follows over 3K accounts, while Donald Trump follows less than
+50). Why do you think this is? How might that affect our analysis?
+
+
+Solution:
+=========
+
+Gary Johnson, follows users/groups from diverse backgrounds like sports, ACUF, FM, Weather, News channels etc Whereas Trump on other hand, being elected as President majorily follows groups rather than individual users like "homeland security", "US labor department", "US dept of education", "NASA", his own page for instance etc. 
+
+It will affect our analysis because we are trying to compare two different users one following the candidates and the other following groups. A group may have many candidates following them and so the infeed to the group will be more. Whereas when looking at individual candidates, there may be few infeeds and few outfeeds. 
+
+Moreover, Donald does not have to seek attention from people as he would be having many followers following his page and tweets rather than he following a single user. Whereas Gary in other hand, wants to seek problems and attention from individuals and he follows many accounts and trying to enlarge his circle.
+
+
+
+
+4. The follower graph we've collected is incomplete. To expand it, we would
+have to also collect the list of accounts followed by each of the
+friends. That is, for each user X that Donald Trump follows, we would have to
+also collect all the users that X follows. Assuming we again use the API call
+https://dev.twitter.com/rest/reference/get/friends/ids, how many requests will
+we have to make? Given how Twitter does rate limiting
+(https://dev.twitter.com/rest/public/rate-limiting), approximately how many
+minutes will it take to collect this data?
+
+
+Solution:
+==========
+
+The graph that we plotted has only 267 nodes out of which 4 are our candidates from candidate_list. 
+
+Expanding the graph:
+=================== 
+
+To expand the graph we will have to make 263 calls. The graph that we got contains 267 nodes and hence if we remove 4 candidates from our candidate list, then we will have the number of friends list which will be 263 and these many number of calls needs to be made in order to get the data. But according to the twitter rate limit, 15 calls/requests can be made in a 15 min-window. Assuming we are making the calls very fast in less amount of time, in such a way that time taken to make 15 calls is negligable (Let's say 15 calls are made in a minute and then the code is sleeping for 15 minutes due to the rate limit). We will have to wait for 15 mins, after every 15 requests made. 
+
+Hence, for 263 calls, the expected time taken would be ====> (263/15) = 17.35 ---> The floor of this value ===> 17 to be taken 
+
+Hence the number of minutes it will take to collect this data = 17 * 15 = 255 minutes approx.

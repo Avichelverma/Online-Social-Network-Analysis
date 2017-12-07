@@ -1,0 +1,23 @@
+******************************************************************************************************
+                    NETWORK INFORMATION                                                            
+******************************************************************************************************
+
+Number of Users collected :386
+The Original Graph has 391 nodes and 2347 edges 
+
+The Subgraph (MinFreq >= 3) has 343 nodes and 2274 edges 
+
+The number of communities discovered  : 4 
+Average number of users per community : 85
+
+******************************************************************************************************
+                    CLUSTERS INFORMATION                                                            
+*******************************************************************************************************
+
+Number of clusters 		 Corresponding Number of Nodes/Followers
+****************** 		  ***********************************
+0 							 169 
+1 							 135 
+2 							 36 
+3 							 3 
+
